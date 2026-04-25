@@ -134,13 +134,13 @@ export default function ContactSection() {
                   </div>
                 </a>
 
-                <a href="https://github.com/Priyanshu144" target="_blank" rel="noopener noreferrer" className="flex items-center gap-5 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300 group/item">
+                <a href="https://github.com/Priyanshu6926" target="_blank" rel="noopener noreferrer" className="flex items-center gap-5 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300 group/item">
                   <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300">
                     <Github className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mb-1 font-bold">GitHub</p>
-                    <span className="text-lg font-medium text-white group-hover/item:text-indigo-400 transition-colors">Priyanshu144</span>
+                    <span className="text-lg font-medium text-white group-hover/item:text-indigo-400 transition-colors">Priyanshu6926</span>
                   </div>
                 </a>
 
