@@ -11,7 +11,7 @@ export default function Projects() {
       title: 'AI Interview Prep',
       category: 'MERN Stack / Gemini API',
       image: '/projects/ai_interview.png',
-      liveLink: '#'
+      liveLink: 'https://ai-neural-systems-client.vercel.app'
     },
     {
       id: 2,
