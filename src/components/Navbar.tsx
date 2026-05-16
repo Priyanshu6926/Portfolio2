@@ -77,7 +77,7 @@ export default function Navbar() {
 
           {/* Left-aligned Resume Link */}
           <div className="nav-resume-desktop">
-            <NavLink href="https://drive.google.com/file/d/1iKHkdtJtBBlmJIuwQlSfZkx1dDDhQv3z/view?usp=share_link" label="Resume" external />
+            <NavLink href="https://drive.google.com/file/d/1MXysnfeXaoGJmDDMhg_mMt10ZwduRU0l/view?usp=share_link" label="Resume" external />
           </div>
         </div>
 
