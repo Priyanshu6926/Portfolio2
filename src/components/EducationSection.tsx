@@ -4,33 +4,33 @@ import { motion } from 'framer-motion';
 
 const education = [
     { 
-    degree: 'Secondry School (SSC)', 
-    institution: 'New Ideal School,Vasind', 
+    degree: 'Secondary School (SSC)', 
+    institution: 'New Ideal School, Vasind', 
     year: '2021', 
     grade: 'A',
-    icon: '🎓'
+    icon: 'SSC'
   },
   { 
-    degree: 'Higher Secondry Board (HSC)', 
-    institution: 'Royal Junior College,Dombivli', 
+    degree: 'Higher Secondary Board (HSC)', 
+    institution: 'Royal Junior College, Dombivli', 
     year: '2021 - 2023', 
     grade: 'B+',
-    icon: '🎓'
+    icon: 'HSC'
   },
   { 
     degree: 'Bachelor of Technology in Information Technology', 
     institution: 'KJ Somaiya School of Engineering, Vidyavihar', 
     year: '2023 - 2027',  
     cgpa: '8.8/10',
-    icon: '📚'
+    icon: 'B.Tech'
   }
 ];
 
 const certifications = [
   'Gemini API by Google',
-  'AWS Certified Solutions Architect',
-  'Meta Front-End Developer',
-  'MongoDB Data Modeling Professional'
+  'MERN Stack Development',
+  'Firebase Web Apps',
+  'Responsive Web Design'
 ];
 
 export default function EducationSection() {
@@ -66,7 +66,7 @@ export default function EducationSection() {
               <div className="absolute -inset-2 bg-indigo-500/20 blur-[50px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               
               <div className="relative z-10">
-                <div className="text-4xl mb-4">{edu.icon}</div>
+                <div className="inline-flex min-h-12 items-center rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 text-sm font-mono font-bold text-cyan-300 mb-4">{edu.icon}</div>
                 <h3 className="text-2xl font-bold text-white mb-2">{edu.degree}</h3>
                 <h4 className="text-indigo-400 text-lg mb-6">{edu.institution}</h4>
                 <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-auto">

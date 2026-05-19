@@ -144,9 +144,9 @@ export default function ScrollyCanvas() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3, duration: 0.7, ease: "easeOut" }}
-                className="text-gray-500 text-sm sm:text-base tracking-[0.3em] uppercase font-medium"
+                className="text-gray-500 text-sm sm:text-base tracking-[0.22em] uppercase font-medium"
               >
-                Software Engineer &amp; Web Developer
+                Third-Year B.Tech IT Student | Full-Stack Developer
               </motion.p>
             </div>
 
@@ -227,8 +227,8 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-4 drop-shadow-2xl italic">
             PRIYANSHU SHINGOLE
           </h1>
-          <p className="text-lg sm:text-2xl md:text-4xl font-light tracking-[0.3em] text-white/60 uppercase">
-            Creative Developer &amp; Engineer.
+          <p className="text-base sm:text-xl md:text-3xl font-light tracking-[0.22em] text-white/70 uppercase">
+            Full-Stack Developer | Open to Internships
           </p>
         </motion.div>
 
@@ -237,10 +237,10 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           style={{ opacity: opacity2, x: x2, scale: scale2, filter: blur2 }}
           className="absolute left-4 md:left-24 top-[40%] text-white"
         >
-          <p className="text-cyan-400 font-mono text-sm mb-4 tracking-widest uppercase">Expertise</p>
+          <p className="text-cyan-400 font-mono text-sm mb-4 tracking-widest uppercase">Focus</p>
           <h2 className="text-3xl sm:text-5xl md:text-8xl font-bold tracking-tighter max-w-2xl drop-shadow-2xl">
-            Developing <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">modern web apps.</span>
+            Building <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">usable web apps.</span>
           </h2>
         </motion.div>
 
@@ -249,10 +249,10 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           style={{ opacity: opacity3, x: x3, scale: scale3, filter: blur3 }}
           className="absolute right-4 md:right-24 top-[40%] text-right text-white"
         >
-          <p className="text-indigo-400 font-mono text-sm mb-4 tracking-widest uppercase">AI &amp; Data</p>
+          <p className="text-indigo-400 font-mono text-sm mb-4 tracking-widest uppercase">Learning By Building</p>
           <h2 className="text-3xl sm:text-5xl md:text-8xl font-bold tracking-tighter max-w-2xl ml-auto drop-shadow-2xl">
-            Integrating <br />
-            <span className="text-white">intelligent systems.</span>
+            Shipping <br />
+            <span className="text-white">real projects.</span>
           </h2>
         </motion.div>
 
@@ -263,9 +263,9 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
         >
           <p className="text-white/40 font-mono text-sm mb-2 tracking-widest uppercase">Focus</p>
           <h2 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter max-w-xl">
-            Performance. <br />
-            Scalability. <br />
-            Experience.
+            MERN. <br />
+            Next.js. <br />
+            APIs.
           </h2>
         </motion.div>
 
@@ -275,14 +275,13 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           className="absolute right-4 md:right-32 top-[50%] text-right text-white"
         >
           <h2 className="text-5xl sm:text-7xl md:text-[8rem] font-black tracking-tighter drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/10 leading-[0.8] mb-8">
-            PUSHING <br />
-            LIMITS.
+            READY <br />
+            TO LEARN.
           </h2>
-          <p className="text-gray-500 font-mono text-sm tracking-widest uppercase">Crafted with passion since 2022.</p>
+          <p className="text-gray-500 font-mono text-sm tracking-widest uppercase">Seeking software development internship roles.</p>
         </motion.div>
 
       </div>
     </div>
   );
 }
-

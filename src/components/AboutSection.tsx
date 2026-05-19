@@ -60,12 +60,12 @@ export default function AboutSection() {
             </h2>
             <div className="space-y-6 text-lg text-gray-400 leading-relaxed">
               <p>
-                Hello! I am a passionate full-stack developer dedicated to crafting modern, dynamic web experiences.
-                With a strong foundation in both frontend and backend technologies, I thrive at the intersection of design and engineering.
+                Hello! I am a third-year B.Tech Information Technology student building practical full-stack projects with React,
+                Next.js, Node.js, MongoDB, Firebase, and AI API integrations.
               </p>
               <p>
-                My focus is always on building scalable, performant applications that feel intuitive and engaging to the user,
-                leveraging deep expertise in the MERN stack and Next.js ecosystem.
+                I am currently looking for software development internship opportunities where I can contribute to real products,
+                improve my engineering fundamentals, and keep learning from experienced teams.
               </p>
             </div>
           </motion.div>
@@ -73,9 +73,9 @@ export default function AboutSection() {
           {/* Right Column: Stats */}
           <div className="grid grid-cols-2 gap-4 md:gap-6">
             <Counter from={0} to={5} text="Completed Projects" suffix="+" />
-            <Counter from={0} to={2} text="Years Experience" suffix="+" />
-            <Counter from={0} to={99} text="Coffees Consumed" suffix="∞" />
-            <Counter from={0} to={100} text="Client Satisfaction" suffix="%" />
+            <Counter from={0} to={8} text="Current CGPA" suffix=".8" />
+            <Counter from={0} to={1} text="Internship Experience" suffix="+" />
+            <Counter from={0} to={10} text="Technologies Used" suffix="+" />
           </div>
 
         </div>

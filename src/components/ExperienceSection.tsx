@@ -7,22 +7,22 @@ const experiences = [
     company: 'Bluestock Fintech',
     role: 'Web Developer Intern',
     duration: 'Feb 2026 - Present',
-    description: 'Contributed to the core trading dashboard. Integrated real-time stock APIs and implemented secure user authentication flows. Enhanced the frontend architecture for high-frequency data updates.',
-    icon: '🚀'
+    description: 'Contributing to frontend features for a fintech product, working with dashboard UI, API integration, and production-oriented development practices.',
+    icon: '01'
   },
   {
-    company: '@ In-House AI Project',
-    role: 'Computer Vision Engineer',
+    company: 'AI Interview Prep',
+    role: 'Full-Stack Project',
     duration: 'Jan 2026 - April 2026',
-    description: 'Developing an AI-driven Interview Preparation Platform. Using Gemini API and various computer vision models.',
-    icon: '🎨'
+    description: 'Built an AI-driven interview preparation platform using the MERN stack and Gemini API, with mock interview flows, practice modules, and a dashboard experience.',
+    icon: '02'
   },
   {
-    company: 'StartUp Inc',
-    role: 'Junior Developer',
-    duration: '2022 - 2023',
-    description: 'Assisted in building REST APIs using Node.js and Express. Maintained and debugged legacy codebase, while improving test coverage to 85%.',
-    icon: '💻'
+    company: 'Smart Attendance System',
+    role: 'Academic / Personal Project',
+    duration: '2025',
+    description: 'Created a Firebase-backed attendance tracking app to practice authentication-style flows, realtime data handling, and clean student-facing UI.',
+    icon: '03'
   },
 ];
 
@@ -87,7 +87,7 @@ export default function ExperienceSection() {
 
                 {/* Timeline Dot */}
                 <div className="absolute left-8 md:left-1/2 w-10 h-10 rounded-full bg-black border-2 border-indigo-400 transform -translate-x-1/2 flex items-center justify-center z-10 shadow-[0_0_15px_rgba(99,102,241,0.5)]">
-                  <span className="text-sm">{exp.icon}</span>
+                  <span className="text-xs font-mono text-cyan-300">{exp.icon}</span>
                 </div>
 
                 {/* Content Card */}
