@@ -3,7 +3,7 @@
 import { motion, useInView, animate } from 'framer-motion';
 import { useRef, useEffect } from 'react';
 
-function Counter({ from, to, text, suffix = "" }: { from: number, to: number, text: string, suffix?: string }) {
+function Counter({ from, to, text, suffix = "", decimals = 0 }: { from: number, to: number, text: string, suffix?: string, decimals?: number }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
   const inView = useInView(nodeRef, { once: true, margin: "-100px" });
 
@@ -14,13 +14,13 @@ function Counter({ from, to, text, suffix = "" }: { from: number, to: number, te
         ease: "easeOut",
         onUpdate(value) {
           if (nodeRef.current) {
-            nodeRef.current.textContent = Math.round(value).toString() + suffix;
+            nodeRef.current.textContent = value.toFixed(decimals) + suffix;
           }
         }
       });
       return () => controls.stop();
     }
-  }, [from, to, inView, suffix]);
+  }, [from, to, inView, suffix, decimals]);
 
   return (
     <motion.div
@@ -31,7 +31,7 @@ function Counter({ from, to, text, suffix = "" }: { from: number, to: number, te
       className="flex flex-col items-center justify-center p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
     >
       <span ref={nodeRef} className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.3)]">
-        {from}{suffix}
+        {from.toFixed(decimals)}{suffix}
       </span>
       <span className="mt-2 text-sm text-gray-400 uppercase tracking-widest font-medium text-center">{text}</span>
     </motion.div>
@@ -73,7 +73,7 @@ export default function AboutSection() {
           {/* Right Column: Stats */}
           <div className="grid grid-cols-2 gap-4 md:gap-6">
             <Counter from={0} to={5} text="Completed Projects" suffix="+" />
-            <Counter from={0} to={8} text="Current CGPA" suffix=".8" />
+            <Counter from={0} to={8.8} text="Current CGPA" suffix="/10" decimals={1} />
             <Counter from={0} to={1} text="Internship Experience" suffix="+" />
             <Counter from={0} to={10} text="Technologies Used" suffix="+" />
           </div>
