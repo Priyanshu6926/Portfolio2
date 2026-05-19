@@ -28,11 +28,12 @@ const skillGroups = [
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-black overflow-hidden border-t border-white/5">
+    <section id="skills" className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-[#030712] overflow-hidden border-t border-white/5">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_40%,rgba(99,102,241,0.06)_0%,transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(34,211,238,0.05),transparent_35%,rgba(52,211,153,0.04))] pointer-events-none" />
       <div className="absolute top-0 left-0 w-[1000px] h-[1000px] bg-indigo-600/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto">
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -86,7 +86,13 @@ export default function Projects() {
             >
               {/* Project Image */}
               <div className="absolute inset-0 z-0">
-                <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-55 group-hover:opacity-70" />
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-55 group-hover:opacity-70"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/20" />
               </div>
 

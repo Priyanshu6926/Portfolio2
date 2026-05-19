@@ -35,8 +35,9 @@ const certifications = [
 
 export default function EducationSection() {
   return (
-    <section className="w-full py-24 px-6 md:px-12 lg:px-24 bg-black border-t border-white/5">
-      <div className="max-w-5xl mx-auto">
+    <section className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-[#030712] border-t border-white/5 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,211,238,0.05),transparent_35%),radial-gradient(circle_at_80%_70%,rgba(129,140,248,0.06),transparent_40%)] pointer-events-none" />
+      <div className="relative z-10 max-w-5xl mx-auto">
         
         <motion.div
           initial={{ opacity: 0, y: 30 }}

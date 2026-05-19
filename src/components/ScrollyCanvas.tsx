@@ -1,15 +1,17 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue, AnimatePresence, useSpring } from 'framer-motion';
 
 const FRAME_COUNT = 120; // 0 to 119
 
 export default function ScrollyCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const frameRequestRef = useRef<number | null>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [progress, setProgress] = useState(0);
+  const [isHeroReady, setIsHeroReady] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -18,22 +20,42 @@ export default function ScrollyCanvas() {
   const frameIndex = useTransform(scrollYProgress, [0, 1], [0, FRAME_COUNT - 1]);
 
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
+    const loadedImages: HTMLImageElement[] = new Array(FRAME_COUNT);
     let loadedCount = 0;
 
-    for (let i = 0; i < FRAME_COUNT; i++) {
+    const markFrameReady = (index: number) => {
+      loadedCount++;
+      setProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+      if (index === 0 || loadedCount >= 8) setIsHeroReady(true);
+    };
+
+    const loadFrame = (index: number) => {
       const img = new Image();
-      const frameNum = String(i).padStart(3, '0');
+      const frameNum = String(index).padStart(3, '0');
+      img.decoding = 'async';
       img.src = `/sequence/frame_${frameNum}_delay-0.066s.png`;
-      img.onload = () => {
-        loadedCount++;
-        setProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-        if (loadedCount === FRAME_COUNT) {
-          setImages([...loadedImages]);
-        }
-      };
-      loadedImages.push(img);
-    }
+      img.onload = () => markFrameReady(index);
+      img.onerror = () => markFrameReady(index);
+      loadedImages[index] = img;
+    };
+
+    loadFrame(0);
+    setImages(loadedImages);
+
+    const loadRemainingFrames = () => {
+      for (let i = 1; i < FRAME_COUNT; i++) loadFrame(i);
+    };
+
+    const canLoadWhenIdle = typeof window.requestIdleCallback === 'function';
+    const idleCallback = canLoadWhenIdle ? window.requestIdleCallback(loadRemainingFrames, { timeout: 1200 }) : undefined;
+    const timeout = canLoadWhenIdle ? undefined : window.setTimeout(loadRemainingFrames, 250);
+    const heroFallback = window.setTimeout(() => setIsHeroReady(true), 3500);
+
+    return () => {
+      if (idleCallback) window.cancelIdleCallback?.(idleCallback);
+      if (timeout) window.clearTimeout(timeout);
+      window.clearTimeout(heroFallback);
+    };
   }, []);
 
   const renderFrame = useCallback((index: number) => {
@@ -43,8 +65,15 @@ export default function ScrollyCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const img = images[index];
-    if (!img.complete || img.naturalWidth === 0) return;
+    let img = images[index];
+    let fallbackIndex = index;
+
+    while ((!img || !img.complete || img.naturalWidth === 0) && fallbackIndex > 0) {
+      fallbackIndex--;
+      img = images[fallbackIndex];
+    }
+
+    if (!img || !img.complete || img.naturalWidth === 0) return;
 
     const canvasRatio = canvas.width / canvas.height;
     const imgRatio = img.width / img.height;
@@ -68,14 +97,27 @@ export default function ScrollyCanvas() {
   }, [images]);
 
   useMotionValueEvent(frameIndex, 'change', (latest) => {
-    renderFrame(Math.round(latest));
+    if (frameRequestRef.current) cancelAnimationFrame(frameRequestRef.current);
+    frameRequestRef.current = requestAnimationFrame(() => renderFrame(Math.round(latest)));
   });
+
+  useEffect(() => {
+    return () => {
+      if (frameRequestRef.current) cancelAnimationFrame(frameRequestRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (images.length > 0 && canvasRef.current) {
       renderFrame(0);
     }
   }, [images, renderFrame]);
+
+  useEffect(() => {
+    if (images.length > 0 && canvasRef.current) {
+      renderFrame(Math.round(frameIndex.get()));
+    }
+  }, [progress, images, frameIndex, renderFrame]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -94,7 +136,7 @@ export default function ScrollyCanvas() {
   return (
     <>
       <AnimatePresence>
-        {progress < 100 && (
+        {!isHeroReady && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.04 }}
@@ -186,35 +228,41 @@ export default function ScrollyCanvas() {
 }
 
 function Overlay({ progress }: { progress: MotionValue<number> }) {
+  const smoothProgress = useSpring(progress, {
+    stiffness: 70,
+    damping: 24,
+    mass: 0.35,
+  });
+
   // Text 1: Primary Intro (Center)
-  const opacity1 = useTransform(progress, [0, 0.12, 0.18], [1, 1, 0]);
-  const y1 = useTransform(progress, [0, 0.18], [0, -100]);
-  const scale1 = useTransform(progress, [0, 0.18], [1, 0.8]);
-  const blur1 = useTransform(progress, [0.12, 0.18], ["blur(0px)", "blur(10px)"]);
+  const opacity1 = useTransform(smoothProgress, [0, 0.13, 0.2], [0.88, 0.88, 0]);
+  const y1 = useTransform(smoothProgress, [0, 0.2], [0, -70]);
+  const scale1 = useTransform(smoothProgress, [0, 0.2], [1, 0.9]);
+  const blur1 = useTransform(smoothProgress, [0.13, 0.2], ["blur(0px)", "blur(6px)"]);
 
   // Text 2: Focus 1 (Left)
-  const opacity2 = useTransform(progress, [0.2, 0.25, 0.35, 0.4], [0, 1, 1, 0]);
-  const x2 = useTransform(progress, [0.2, 0.25, 0.4], [-60, 0, 60]);
-  const scale2 = useTransform(progress, [0.2, 0.25, 0.4], [0.8, 1, 1.1]);
-  const blur2 = useTransform(progress, [0.2, 0.25, 0.35, 0.4], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(10px)"]);
+  const opacity2 = useTransform(smoothProgress, [0.2, 0.27, 0.38, 0.44], [0, 1, 1, 0]);
+  const x2 = useTransform(smoothProgress, [0.2, 0.27, 0.44], [-36, 0, 32]);
+  const scale2 = useTransform(smoothProgress, [0.2, 0.27, 0.44], [0.94, 1, 1.03]);
+  const blur2 = useTransform(smoothProgress, [0.2, 0.27, 0.38, 0.44], ["blur(6px)", "blur(0px)", "blur(0px)", "blur(6px)"]);
 
   // Text 3: Focus 2 (Right)
-  const opacity3 = useTransform(progress, [0.42, 0.47, 0.57, 0.62], [0, 1, 1, 0]);
-  const x3 = useTransform(progress, [0.42, 0.47, 0.62], [60, 0, -60]);
-  const scale3 = useTransform(progress, [0.42, 0.47, 0.62], [0.8, 1, 1.1]);
-  const blur3 = useTransform(progress, [0.42, 0.47, 0.57, 0.62], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(10px)"]);
+  const opacity3 = useTransform(smoothProgress, [0.43, 0.5, 0.61, 0.67], [0, 1, 1, 0]);
+  const x3 = useTransform(smoothProgress, [0.43, 0.5, 0.67], [36, 0, -32]);
+  const scale3 = useTransform(smoothProgress, [0.43, 0.5, 0.67], [0.94, 1, 1.03]);
+  const blur3 = useTransform(smoothProgress, [0.43, 0.5, 0.61, 0.67], ["blur(6px)", "blur(0px)", "blur(0px)", "blur(6px)"]);
 
   // Text 4: Focus 3 (Left-Center)
-  const opacity4 = useTransform(progress, [0.64, 0.69, 0.79, 0.84], [0, 1, 1, 0]);
-  const y4 = useTransform(progress, [0.64, 0.69, 0.84], [50, 0, -50]);
-  const scale4 = useTransform(progress, [0.64, 0.69, 0.79, 0.84], [0.8, 1, 1, 0.8]);
-  const blur4 = useTransform(progress, [0.64, 0.69, 0.79, 0.84], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(10px)"]);
+  const opacity4 = useTransform(smoothProgress, [0.67, 0.74, 0.86, 0.93], [0, 1, 1, 0]);
+  const y4 = useTransform(smoothProgress, [0.67, 0.74, 0.93], [32, 0, -32]);
+  const scale4 = useTransform(smoothProgress, [0.67, 0.74, 0.93], [0.95, 1, 0.96]);
+  const blur4 = useTransform(smoothProgress, [0.67, 0.74, 0.86, 0.93], ["blur(6px)", "blur(0px)", "blur(0px)", "blur(6px)"]);
 
   // Text 5: Final Call to Action (Right-Center)
-  const opacity5 = useTransform(progress, [0.86, 0.91, 0.96, 0.99], [0, 1, 1, 0]);
-  const x5 = useTransform(progress, [0.86, 0.91], [80, 0]);
-  const scale5 = useTransform(progress, [0.86, 0.91, 0.99], [1.2, 1, 0.9]);
-  const blur5 = useTransform(progress, [0.86, 0.91, 0.96, 0.99], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(10px)"]);
+  const opacity5 = useTransform(smoothProgress, [0.9, 0.95, 1], [0, 1, 1]);
+  const x5 = useTransform(smoothProgress, [0.9, 0.95], [48, 0]);
+  const scale5 = useTransform(smoothProgress, [0.9, 0.95, 1], [1.05, 1, 0.98]);
+  const blur5 = useTransform(smoothProgress, [0.9, 0.95], ["blur(6px)", "blur(0px)"]);
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-none z-10 flex flex-col justify-center px-6">
@@ -223,12 +271,12 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
         {/* Section 1 */}
         <motion.div
           style={{ opacity: opacity1, y: y1, scale: scale1, filter: blur1 }}
-          className="absolute inset-x-0 top-[35%] text-center text-white"
+          className="absolute inset-x-0 top-[50%] sm:top-[52%] text-center text-white"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-4 drop-shadow-2xl italic">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-4 italic text-white/85 drop-shadow-[0_8px_28px_rgba(0,0,0,0.75)]">
             PRIYANSHU SHINGOLE
           </h1>
-          <p className="text-base sm:text-xl md:text-3xl font-light tracking-[0.22em] text-white/70 uppercase">
+          <p className="text-base sm:text-xl md:text-3xl font-light tracking-[0.22em] text-white/55 uppercase">
             Full-Stack Developer | Open to Internships
           </p>
         </motion.div>
@@ -238,10 +286,10 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           style={{ opacity: opacity2, x: x2, scale: scale2, filter: blur2 }}
           className="absolute left-4 md:left-24 top-[40%] text-white"
         >
-          <p className="text-cyan-400 font-mono text-sm mb-4 tracking-widest uppercase">Focus</p>
+          <p className="text-cyan-400 font-mono text-sm mb-4 tracking-widest uppercase">What I Build</p>
           <h2 className="text-3xl sm:text-5xl md:text-8xl font-bold tracking-tighter max-w-2xl drop-shadow-2xl">
-            Building <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">usable web apps.</span>
+            Interfaces <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">people can use.</span>
           </h2>
         </motion.div>
 
@@ -250,10 +298,10 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           style={{ opacity: opacity3, x: x3, scale: scale3, filter: blur3 }}
           className="absolute right-4 md:right-24 top-[40%] text-right text-white"
         >
-          <p className="text-indigo-400 font-mono text-sm mb-4 tracking-widest uppercase">Learning By Building</p>
+          <p className="text-indigo-400 font-mono text-sm mb-4 tracking-widest uppercase">How I Learn</p>
           <h2 className="text-3xl sm:text-5xl md:text-8xl font-bold tracking-tighter max-w-2xl ml-auto drop-shadow-2xl">
-            Shipping <br />
-            <span className="text-white">real projects.</span>
+            Turning ideas <br />
+            <span className="text-white">into shipped work.</span>
           </h2>
         </motion.div>
 
@@ -262,11 +310,11 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           style={{ opacity: opacity4, y: y4, scale: scale4, filter: blur4 }}
           className="absolute left-4 md:left-32 top-[55%] text-white"
         >
-          <p className="text-white/40 font-mono text-sm mb-2 tracking-widest uppercase">Focus</p>
+          <p className="text-white/40 font-mono text-sm mb-2 tracking-widest uppercase">Current Stack</p>
           <h2 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter max-w-xl">
-            MERN. <br />
-            Next.js. <br />
-            APIs.
+            React. <br />
+            Node. <br />
+            Firebase.
           </h2>
         </motion.div>
 
@@ -276,10 +324,10 @@ function Overlay({ progress }: { progress: MotionValue<number> }) {
           className="absolute right-4 md:right-32 top-[50%] text-right text-white"
         >
           <h2 className="text-5xl sm:text-7xl md:text-[8rem] font-black tracking-tighter drop-shadow-2xl bg-clip-text text-transparent bg-gradient-to-b from-white to-white/10 leading-[0.8] mb-8">
-            READY <br />
-            TO LEARN.
+            INTERN <br />
+            READY.
           </h2>
-          <p className="text-gray-500 font-mono text-sm tracking-widest uppercase">Seeking software development internship roles.</p>
+          <p className="text-gray-500 font-mono text-sm tracking-widest uppercase">Available for software development internship roles.</p>
         </motion.div>
 
       </div>

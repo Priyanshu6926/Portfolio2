@@ -40,12 +40,13 @@ function Counter({ from, to, text, suffix = "", decimals = 0 }: { from: number, 
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-black overflow-hidden border-t border-white/5">
+    <section id="about" className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-[#02050b] overflow-hidden border-t border-white/5">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(167,139,250,0.05)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.028)_1px,transparent_1px)] bg-[size:100%_72px] opacity-70 pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-      <div className="max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
           {/* Left Column: Bio */}

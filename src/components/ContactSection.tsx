@@ -75,12 +75,13 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="w-full py-24 px-6 md:px-12 lg:px-24 bg-black relative border-t border-white/5 overflow-hidden pb-32">
+    <section id="contact" className="w-full py-24 px-6 md:px-12 lg:px-24 bg-[#02050b] relative border-t border-white/5 overflow-hidden pb-32">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(99,102,241,0.06)_0%,transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.026)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.026)_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] pointer-events-none" />
       <div className="absolute bottom-0 right-[10%] w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-[120px] pointer-events-none translate-y-1/2" />
       <div className="absolute top-[10%] left-[-5%] w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-6xl mx-auto">
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

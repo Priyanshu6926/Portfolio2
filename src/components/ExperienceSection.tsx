@@ -47,11 +47,12 @@ const itemVariants = {
 
 export default function ExperienceSection() {
   return (
-    <section id="work" className="w-full py-24 px-6 md:px-12 lg:px-24 bg-black relative border-t border-white/5 overflow-hidden">
+    <section id="work" className="w-full py-24 px-6 md:px-12 lg:px-24 bg-[#02050b] relative border-t border-white/5 overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(99,102,241,0.03)_0%,transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0,rgba(255,255,255,0.035)_50%,transparent_100%)] opacity-40 pointer-events-none" />
       <div className="absolute top-[20%] right-[-10%] w-[800px] h-[800px] bg-purple-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="max-w-5xl mx-auto">
+      <div className="relative z-10 max-w-5xl mx-auto">
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
