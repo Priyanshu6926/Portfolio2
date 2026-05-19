@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"),
-  title: "Priyanshu Shingole | Full Stack Developer & Engineer",
-  description: "Explore the portfolio of Priyanshu Shingole, a Full Stack Developer specializing in building high-performance web applications with React, Next.js, and AI integration.",
-  keywords: ["Priyanshu Shingole", "Full Stack Developer", "Software Engineer", "React Developer", "Next.js Portfolio", "AI Integration"],
+  metadataBase: new URL("https://priyanshu-shingole.vercel.app"),
+  title: "Priyanshu Shingole | Full-Stack Developer Portfolio",
+  description: "Portfolio of Priyanshu Shingole, a third-year B.Tech IT student building full-stack web projects with React, Next.js, Node.js, MongoDB, Firebase, and AI APIs.",
+  keywords: ["Priyanshu Shingole", "Full Stack Developer", "Software Development Intern", "React Developer", "Next.js Portfolio", "MERN Stack"],
   authors: [{ name: "Priyanshu Shingole" }],
   openGraph: {
-    title: "Priyanshu Shingole | Full Stack Developer",
-    description: "Building responsive web apps and bridging design with AI.",
+    title: "Priyanshu Shingole | Full-Stack Developer Portfolio",
+    description: "Third-year B.Tech IT student building full-stack web projects and seeking software development internships.",
     url: "https://priyanshu-shingole.vercel.app/",
     siteName: "Priyanshu Portfolio",
     locale: "en_US",
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Priyanshu Shingole | Full Stack Developer",
-    description: "Building responsive web apps and bridging design with AI.",
+    title: "Priyanshu Shingole | Full-Stack Developer Portfolio",
+    description: "Third-year B.Tech IT student building full-stack web projects and seeking software development internships.",
   },
 };
 import SmoothScrolling from "@/components/SmoothScrolling";

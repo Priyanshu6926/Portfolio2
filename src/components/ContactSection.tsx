@@ -93,7 +93,7 @@ export default function ContactSection() {
             Let&apos;s <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Connect</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind or just want to say hi? Feel free to reach out.
+            I am open to software development internship opportunities, project collaborations, and technical conversations.
           </p>
         </motion.div>
 
@@ -107,11 +107,12 @@ export default function ContactSection() {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <div className="bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden group/card">
+            <div className="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden group/card">
               {/* Internal decorative glow */}
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 blur-[60px] rounded-full group-hover/card:bg-indigo-500/20 transition-colors duration-500" />
               
-              <h3 className="text-2xl font-bold text-white mb-8 relative z-10">Contact Information</h3>
+              <h3 className="text-2xl font-bold text-white mb-3 relative z-10">Contact Information</h3>
+              <p className="text-gray-400 mb-8 relative z-10">Best for internship queries, referrals, and project discussions.</p>
               
               <div className="space-y-4 relative z-10">
                 <a href="mailto:priyanshushingole@gmail.com" className="flex items-center gap-5 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300 group/item">
@@ -120,7 +121,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mb-1 font-bold">Email</p>
-                    <span className="text-lg font-medium text-white group-hover/item:text-indigo-400 transition-colors">Gmail</span>
+                    <span className="text-lg font-medium text-white group-hover/item:text-indigo-400 transition-colors break-all">priyanshushingole@gmail.com</span>
                   </div>
                 </a>
 
@@ -166,7 +167,7 @@ export default function ContactSection() {
           >
             <form ref={formRef} onSubmit={sendEmail} className="space-y-6" noValidate>
               <div>
-                <label htmlFor="user_name" className="block text-sm font-medium text-gray-400 mb-2">Build Together</label>
+                <label htmlFor="user_name" className="block text-sm font-medium text-gray-400 mb-2">Name</label>
                 <input
                   type="text"
                   name="user_name"
@@ -178,9 +179,11 @@ export default function ContactSection() {
               </div>
 
               <div>
+                <label htmlFor="user_email" className="block text-sm font-medium text-gray-400 mb-2">Email</label>
                 <input
                   type="email"
                   name="user_email"
+                  id="user_email"
                   placeholder="Your Email Address"
                   className={`w-full bg-white/5 border ${errors.user_email ? 'border-red-500/50' : 'border-white/10'} rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all`}
                 />
@@ -188,10 +191,12 @@ export default function ContactSection() {
               </div>
 
               <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">Message</label>
                 <textarea
                   name="message"
+                  id="message"
                   rows={5}
-                  placeholder="Your Message"
+                  placeholder="Tell me about the role, project, or opportunity"
                   className={`w-full bg-white/5 border ${errors.message ? 'border-red-500/50' : 'border-white/10'} rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none`}
                 />
                 {errors.message && <p className="mt-1 text-xs text-red-400 flex items-center gap-1"><AlertCircle className="w-3 h-3" /> {errors.message}</p>}

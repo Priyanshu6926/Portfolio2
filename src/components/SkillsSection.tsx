@@ -1,43 +1,30 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Code2, Database, Server, Wrench } from 'lucide-react';
 
-const skills = [
-  { name: 'React', level: 90 },
-  { name: 'Next.js', level: 85 },
-  { name: 'Node.js', level: 80 },
-  { name: 'MongoDB', level: 85 },
-  { name: 'HTML/CSS', level: 95 },
-  { name: 'Tailwind CSS', level: 90 },
-  { name: 'Express', level: 80 },
-  { name: 'Gemini API', level: 75 },
+const skillGroups = [
+  {
+    title: 'Frontend',
+    icon: Code2,
+    items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+  },
+  {
+    title: 'Backend',
+    icon: Server,
+    items: ['Node.js', 'Express', 'REST APIs', 'Authentication', 'API Integration'],
+  },
+  {
+    title: 'Data & Cloud',
+    icon: Database,
+    items: ['MongoDB', 'Firebase', 'Netlify', 'Vercel', 'Deployment'],
+  },
+  {
+    title: 'Tools & AI',
+    icon: Wrench,
+    items: ['Git', 'GitHub', 'Gemini API', 'EmailJS', 'Responsive Design'],
+  },
 ];
-
-function SkillBar({ name, level, index }: { name: string, level: number, index: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-
-  return (
-    <div ref={ref} className="mb-6 md:mb-8">
-      <div className="flex justify-between mb-2">
-        <span className="text-gray-200 font-medium tracking-wide">{name}</span>
-        <span className="text-gray-400 text-sm font-mono">{level}%</span>
-      </div>
-      <div className="w-full h-3 bg-white/5 rounded-full overflow-hidden border border-white/10 relative backdrop-blur-sm">
-        <motion.div 
-          initial={{ width: 0 }}
-          animate={inView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }} // smooth easeOut
-          className="absolute top-0 left-0 h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 shadow-[0_0_20px_rgba(99,102,241,0.6)] rounded-full"
-        >
-          {/* Subtle animated highlight on the bar itself */}
-          <div className="w-full h-full bg-gradient-to-b from-white/30 to-transparent" />
-        </motion.div>
-      </div>
-    </div>
-  );
-}
 
 export default function SkillsSection() {
   return (
@@ -58,18 +45,34 @@ export default function SkillsSection() {
             Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Skills</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            A comprehensive overview of my technical expertise and proficiency across various modern web technologies.
+            Tools I have used across projects, internships, and self-learning. I keep this section practical instead of rating myself with arbitrary percentages.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
-          {skills.map((skill, index) => (
-            <SkillBar 
-              key={skill.name} 
-              name={skill.name} 
-              level={skill.level} 
-              index={index} 
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {skillGroups.map((group, index) => (
+            <motion.div
+              key={group.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 hover:border-cyan-400/30 transition-colors"
+            >
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-300">
+                  <group.icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-xl font-bold text-white">{group.title}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <span key={item} className="rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-gray-300">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
           ))}
         </div>
 

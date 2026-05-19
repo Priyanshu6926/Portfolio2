@@ -11,6 +11,8 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ];
 
+const resumeUrl = 'https://drive.google.com/file/d/1MXysnfeXaoGJmDDMhg_mMt10ZwduRU0l/view?usp=share_link';
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -77,7 +79,7 @@ export default function Navbar() {
 
           {/* Left-aligned Resume Link */}
           <div className="nav-resume-desktop">
-            <NavLink href="https://drive.google.com/file/d/1MXysnfeXaoGJmDDMhg_mMt10ZwduRU0l/view?usp=share_link" label="Resume" external />
+            <NavLink href={resumeUrl} label="Resume" external />
           </div>
         </div>
 
@@ -199,7 +201,7 @@ export default function Navbar() {
           ))}
           <li style={{ padding: '0.65rem 0' }}>
             <a
-              href="https://drive.google.com/file/d/1Qnf4ddBk_zCsfKEmu8M9Pk_NyAgP2rx3/view?usp=sharing"
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
