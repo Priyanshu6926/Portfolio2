@@ -2,6 +2,7 @@
 
 import { motion, useInView, animate } from 'framer-motion';
 import { useRef, useEffect } from 'react';
+import IDCard3D from './IDCard3D';
 
 function Counter({ from, to, text, suffix = "", decimals = 0 }: { from: number, to: number, text: string, suffix?: string, decimals?: number }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -55,11 +56,12 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col justify-center"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
               About <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Me</span>
             </h2>
-            <div className="space-y-6 text-lg text-gray-400 leading-relaxed">
+            <div className="space-y-6 text-lg text-gray-400 leading-relaxed mb-12">
               <p>
                 Hello! I am a third-year B.Tech Information Technology student building practical full-stack projects with React,
                 Next.js, Node.js, MongoDB, Firebase, and AI API integrations.
@@ -69,15 +71,26 @@ export default function AboutSection() {
                 improve my engineering fundamentals, and keep learning from experienced teams.
               </p>
             </div>
+            
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
+              <Counter from={0} to={5} text="Completed Projects" suffix="+" />
+              <Counter from={0} to={8.8} text="Current CGPA" suffix="/10" decimals={1} />
+              <Counter from={0} to={1} text="Internship Experience" suffix="+" />
+              <Counter from={0} to={10} text="Technologies Used" suffix="+" />
+            </div>
           </motion.div>
 
-          {/* Right Column: Stats */}
-          <div className="grid grid-cols-2 gap-4 md:gap-6">
-            <Counter from={0} to={5} text="Completed Projects" suffix="+" />
-            <Counter from={0} to={8.8} text="Current CGPA" suffix="/10" decimals={1} />
-            <Counter from={0} to={1} text="Internship Experience" suffix="+" />
-            <Counter from={0} to={10} text="Technologies Used" suffix="+" />
-          </div>
+          {/* Right Column: 3D ID Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="w-full h-full flex items-center justify-center"
+          >
+            <IDCard3D />
+          </motion.div>
 
         </div>
       </div>

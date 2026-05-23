@@ -35,6 +35,8 @@ export const metadata: Metadata = {
 import SmoothScrolling from "@/components/SmoothScrolling";
 import Navbar from "@/components/Navbar";
 
+import CustomCursor from "@/components/CustomCursor";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,6 +47,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <CustomCursor />
         <Navbar />
         <SmoothScrolling>
           {children}
